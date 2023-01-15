@@ -210,17 +210,17 @@ def run_trial_word(nrWordsPerSentence=5, nrSentences=3, nrSteeringMovementsWhenS
     print("elapsed_time", elapsed_time)
     # Plot stuff
     # time_interval_ms = [50 * i for i in range(len(locDrifts))]
-    plt.plot(time_interval_ms, locDrifts, '-o', color='blue')
+    plt.plot(time_interval_ms, locDrifts, '-', color='blue')
     plt.xlabel("Time in ms")
     plt.ylabel("Lane position")
 
     # For debugging: it prints the border between drift-steer phases
-    # for border in sequence_border:
-    #     plt.vlines(x=border, ymin=0.1, ymax=0.5,
-    #                colors='purple',
-    #                label='border')
+    for border in sequence_border:
+        plt.vlines(x=border, ymin=0.1, ymax=0.5,
+                   colors='purple',
+                   label='border')
 
-    plt.text(-2.5, 0.5,
+    plt.text(-2.5, 0.4,
              f"Total trial time = {trialTime}; Mean position on the road = {sum(locDrifts) / len(locDrifts)}; Max position on the road (Absolute) = {max(locDrifts)}",
              bbox=dict(facecolor='red', alpha=0.5))
     plt.show()
@@ -244,7 +244,6 @@ def run_trial_sentence(nrWordsPerSentence=5, nrSentences=3, nrSteeringMovementsW
             # Calculate how long it takes to type a word and add this to the trial time
             if word_no == 0:
                 time_to_type_word += retrievalTimeSentence
-            time_to_type_word += retrievalTimeWord
             time_to_type_word += timePerWord
             print("time_to_type_word", time_to_type_word)
 
@@ -295,17 +294,17 @@ def run_trial_sentence(nrWordsPerSentence=5, nrSentences=3, nrSteeringMovementsW
     print("elapsed_time", elapsed_time)
     # Plot stuff
     # time_interval_ms = [50 * i for i in range(len(locDrifts))]
-    plt.plot(time_interval_ms, locDrifts, '-o', color='blue')
+    plt.plot(time_interval_ms, locDrifts, '-', color='blue')
     plt.xlabel("Time in ms")
     plt.ylabel("Lane position")
 
-    # For debugging: it prints the border between drift-steer phases
-    for border in sequence_border:
-        plt.vlines(x=border, ymin=0.1, ymax=0.5,
-                   colors='purple',
-                   label='border')
+    # # For debugging: it prints the border between drift-steer phases
+    # for border in sequence_border:
+    #     plt.vlines(x=border, ymin=0.1, ymax=0.5,
+    #                colors='purple',
+    #                label='border')
 
-    plt.text(-2.5, 0.5,
+    plt.text(-2.5, 0.6,
              f"Total trial time = {trialTime}; Mean position on the road = {sum(locDrifts) / len(locDrifts)}; Max position on the road (Absolute) = {max(locDrifts)}",
              bbox=dict(facecolor='red', alpha=0.5))
     plt.show()
@@ -324,4 +323,5 @@ def runSimulations(nrSims=100):
 
 
 if __name__ == '__main__':
-    runTrial(nrWordsPerSentence=17, nrSentences=10, nrSteeringMovementsWhenSteering=4, interleaving="sentence")
+    for i in range(100):
+        runTrial(nrWordsPerSentence=17, nrSentences=10, nrSteeringMovementsWhenSteering=4, interleaving="word")
